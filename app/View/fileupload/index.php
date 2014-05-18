@@ -53,15 +53,15 @@
 							<?php } ?>
 							<form class="form-horizontal" action="<?=WEB_ROOT?>/fileupload/upload" method="POST" enctype="multipart/form-data" role="form">
 								<div class="form-group">
-									<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label" for="no">組別</label>
+									<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label" for="no">編號</label>
 									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" >
-										<input name="no" class="form-control" type="number" min=1 max=27 placeholder="組別(1~27)" />
+										<input name="no" class="form-control" type="text" placeholder="103-CSIE-S001-MID" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label" for="no">刪除密碼</label>
 									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" >
-										<input name="deletepassword" class="form-control" type="password" placeholder="傳錯檔案時刪除的密碼" />
+										<input name="deletepassword" required class="form-control" type="password" placeholder="傳錯檔案時刪除的密碼" />
 									</div>
 								</div>
 								<div class="form-group">

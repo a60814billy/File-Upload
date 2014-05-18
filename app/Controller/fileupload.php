@@ -12,7 +12,6 @@ class fileuploadController extends Controller{
 	}
 
 	public function index(){
-		$this->_model->createTable();
 	}
 
 	public function upload(){
@@ -21,10 +20,14 @@ class fileuploadController extends Controller{
 			$file = $_FILES['paper'];
 			$t = explode(".", $file['name']);
 			$extname = $t[1];
-			$newFilename = iconv('utf-8' , 'big5' , substr(SYS_ROOT , 0 , -7). "/upload/" . $no . "_專題報告" . date('Ymd-His')  . "." . $extname);
-			move_uploaded_file($file['tmp_name'] , $newFilename);
+			$newFilename = substr(SYS_ROOT , 0 , -7). "/upload/" . $no . "_專題報告" . date('Ymd-His')  . "." . $extname;
+			if($this->_config['other']['system'] == 'Windows'){
+				move_uploaded_file($file['tmp_name'] , iconv('utf-8' , 'big5' , $newFilename));
+			}else{
+				move_uploaded_file($file['tmp_name'] , $newFilename);	
+			}
+			
 			$pass = $_POST['deletepassword'];
-			Log::write("Password:" . $pass);
 			$this->_model->uploadfile($no , $pass , $file['name'] , $no . "_專題報告" . date('Ymd-His')  . "." . $extname);
 		}
 		header("Location:" . WEB_ROOT . "?message=1");
@@ -56,9 +59,9 @@ class fileuploadController extends Controller{
 	}
 
 
-/**
- * Admin Function
- */
+	/**
+	 * Admin Function
+	 */
 	public function logout(){
 		unset($_SESSION['login']);
 		header("Location:" . WEB_ROOT);
@@ -74,6 +77,7 @@ class fileuploadController extends Controller{
 
 	public function admin(){
 		$this->isLogin();
+		$this->_opdata['list'] = $this->_model->getAll();
 	}
 
 	public function runsql(){

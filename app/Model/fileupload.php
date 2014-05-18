@@ -11,15 +11,14 @@ EOD;
 		$upload = <<<UPLOAD
 			CREATE TABLE IF NOT EXISTS upload (
 				id INTEGER PRIMARY KEY AUTOINCREMENT,
-				groupNo INTEGER NOT NULL,
+				groupNo Text NOT NULL,
 				deletepassword TEXT NOT NULL,
 				originfilename TEXT NOT NULL,
 				serverfilename TEXT NOT NULL,
 				uploadtime DATETIME NOT NULL
 			);
 UPLOAD;
-		echo $str;
-		$this->_db->exec($str);
+		$this->_db->exec($config);
 		$this->_db->exec($upload);
 	}
 
@@ -44,6 +43,11 @@ UPLOAD;
 		$this->_db->query($sql);
 		Log::write("Num:".$this->_db->getNum());
 		return $this->_db->getDatas();
+	}
+
+	public function getAll(){
+		$data = $this->_db->getAllData('upload');
+		return $data;
 	}
 
 	public function checkpassword($password){

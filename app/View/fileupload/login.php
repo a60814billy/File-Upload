@@ -48,7 +48,7 @@
 					<div class="panel-heading" id="title">Admin Login</div>
 					<div class="panel-body">
 						<form class="form-inline" action="<?=WEB_ROOT?>/fileupload/login" method="POST">
-							<input class="form-control" type="text" name="password" placeholder="Password" />
+							<input class="form-control" type="password" name="password" placeholder="Password" />
 							<input class="btn btn-default btn-primary" type="submit" value="login">
 						</form>
 					</div>

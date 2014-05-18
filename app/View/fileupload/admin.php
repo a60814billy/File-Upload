@@ -57,7 +57,26 @@
 				<div class="panel panel-default panel-primary">
 					<div class="panel-heading" id="title">Upload List</div>
 					<div class="panel-body">
-						
+						<table class="table table-bordered table-hover">
+							<tr>
+								<th> </th>
+								<th>編號</th>
+								<th>原始檔名</th>
+								<th>上傳時間</th>
+							</tr>
+							<?php foreach($data['list'] as $r){ ?>
+							<tr>
+								<td>
+								<button class="btn btn-default" onclick="download('<?php echo $r['serverfilename']?>')" >
+									<span class="glyphicon glyphicon-cloud-download"></span>
+								</button>
+								</td>
+								<td><?php echo $r['groupNo'] ?></td>
+								<td><?php echo $r['originfilename'] ?></td>
+								<td><?php echo date("Y-m-d H:i:s" , $r['uploadtime']); ?></td>
+							</tr>
+							<?php } ?>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -72,6 +91,13 @@
 		<script src="<?=WEB_ROOT?>/js/bootstrap-fileinput.js"></script>
 		<script>
 			$('input[type=file]').bootstrapFileInput();
+			function download($file){
+				var $ifram = $("<iframe style='display:none;' />");
+				$ifram.attr("src" , "<?=WEB_ROOT?>/upload/" + $file);
+				$ifram.appendTo('body');
+				$ifram.load(function(){
+				});
+			}
 		</script>
 	</body>
 </html>
