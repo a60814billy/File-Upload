@@ -37,6 +37,7 @@
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?=WEB_ROOT?>/fileupload/runsql">Run SQL Statments</a></li>
+								<li><a href="<?=WEB_ROOT?>/fileupload/createtable" >Create Table</a></li>
 								<li><a href="<?=WEB_ROOT?>/fileupload/logout">Logout</a></li>
 							</ul>
 						</li>

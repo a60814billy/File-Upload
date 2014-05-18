@@ -51,6 +51,9 @@
 					<li>Home</li>
 					<li class="active"><a href="#">Admin</a></li>
 				</ol>
+				<?php if(!empty($data['message'])){ ?>
+				<div class="alert alert-info"><?=$data['message']?></div>
+				<?php } ?>
 				<div class="panel panel-default panel-primary">
 					<div class="panel-heading" id="title">Upload List</div>
 					<div class="panel-body">

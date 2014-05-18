@@ -92,5 +92,7 @@ class fileuploadController extends Controller{
 	public function createtable(){
 		$this->isLogin();
 		$this->_model->createtable();
+		$this->setCustomerView("admin");
+		$this->_opdata['message'] = "Create Table Succeed!";
 	}
 }

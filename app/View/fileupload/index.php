@@ -32,7 +32,7 @@
 				<nav class="navbar-default" role="navigation">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="active"><a href="<?=WEB_ROOT?>/">上傳</a></li>
-						<li><a href="<?=WEB_ROOT?>/fileupload/delete">刪除</a></li>
+						<!--<li><a href="<?=WEB_ROOT?>/fileupload/delete">刪除</a></li>-->
 						<li><a href="<?=WEB_ROOT?>/fileupload/admin">Admin</a></li>
 					</ul>
 				</nav>
