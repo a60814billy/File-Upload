@@ -16,7 +16,7 @@
 
 		public function __construct($config){
 			$this->_dbna = $config["database"];
-			$this->_conn = new SQLite3($config["database"]);
+			$this->_conn = new SQLite3($this->_dbna);
 			if($this->_conn->connect_error){
 				die("Error to connect to sql server.");
 			}
@@ -25,12 +25,19 @@
 
 		public function query($sql){
 			$this->sql = $sql;
+            Log::write("  SQL:".$sql);
 			$this->query = $this->_conn->query($this->sql);
             $this->num = 0;
             while($rs = $this->query->fetchArray()) $this->num++;
             $this->query = $this->_conn->query($this->sql);
 			return $this->query;
 		}
+
+        public function exec($sql){
+            $this->sql = $sql;
+            $this->num = 0;
+            return $this->_conn->exec($this->sql);
+        }
 
 		public function getNum(){
 			return $this->num;

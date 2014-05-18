@@ -8,6 +8,7 @@
         }
 
         public function init( $viewfile , $data ){
+            Log::write("-ViewName: " . $viewfile);
             $this->_viewfile=  $viewfile;
             if(file_exists($this->_viewfile)){
                 ob_start();    
@@ -25,7 +26,7 @@
             }
         }
 
-        public function rander(){
+        public function render(){
             echo $this->_content;
         }
     }

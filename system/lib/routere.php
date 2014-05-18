@@ -19,7 +19,7 @@
                 $this->url = substr($this->url , 0 , strlen($this->url) - strlen($config['post_str']));
             }
             $this->url = substr($this->url ,1);
-
+            Log::write("URI:". $this->url);
             $this->parse_url();
             $this->check_para();
         }

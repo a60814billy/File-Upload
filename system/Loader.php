@@ -62,8 +62,8 @@
         public static function run($config){
             self::$_config = $config;
             spl_autoload_register( array('Loader' , 'autoload') );
-            Log::write("Load OS");
-            self::loadOS();
+            Log::write("Load core files");
+            self::loadCoreFiles();
             Log::write("Load Route");
             self::route();
             Log::write("Load Request");
@@ -90,7 +90,7 @@
                     
                     self::$_controller->setModel($model);
                 }
-                self::$_controller->$action();
+                self::$_controller->_action($action);
             }else{
                 Log::write("Controller " . $controller . " not exist" , 3);
                 throw new Exception("Controller " . $controller . " not exist");
@@ -112,11 +112,11 @@
             }
         }
 
-        public static function loadOS(){
-            Log::write("-Load OS Controller");
-            require SYS_ROOT.'/OS/Controller.php';
-            Log::write("-Load OS Model");
-            require SYS_ROOT.'/OS/Model.php';
+        public static function loadCoreFiles(){
+            Log::write("-Load core Controller");
+            require SYS_ROOT.'/core/Controller.php';
+            Log::write("-Load core Model");
+            require SYS_ROOT.'/core/Model.php';
         }
 
         public static function autoload($classnane){

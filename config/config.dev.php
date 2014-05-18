@@ -1,10 +1,10 @@
 <?php
     //路由設定
     $CONFIG['system']['route'] = array(
-        'dufault_controller'    => 'demo',
+        'dufault_controller'    => 'fileupload',
         'default_action'        => 'index',
         'post_str'              => '.php',
-        'rewrite'               => FALSE
+        'rewrite'               => TRUE
     );
     //需載入之函式庫
     $CONFIG['system']['lib'] = array(
@@ -21,7 +21,7 @@
         'hostname'  =>  '',
         'username'  =>  '',
         'password'  =>  '',
-        'database'  =>  '.ht.guestbook.db'
+        'database'  =>  '.fileupload.db'
     );
     //其他設定
     $CONFIG['system']['other'] = array(

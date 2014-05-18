@@ -7,20 +7,19 @@
     );
     
     $CONFIG['system']['lib'] = array(
-        'mysql'     =>  'lib_mysql',
-        'mysqli'    =>  'lib_mysqli',
         'request'   =>  'lib_requests'
     );
 
+    //資料庫設定
     $CONFIG['system']['database'] = array(
-        'hostname'  =>  'localhost',
-        'username'  =>  'ntutcsie',
-        'password'  =>  'ntut',
-        'database'  =>  'ntutcsie'
+        'sql_engine'=>  'sqlite',
+        'hostname'  =>  '',
+        'username'  =>  '',
+        'password'  =>  '',
+        'database'  =>  '.fileupload.db'
     );
     $CONFIG['system']['other'] = array(
         'debug_mode'=>  FALSE
-        'sql_engine'=>  'mysqli'
     );
     error_reporting(E_ALL ^ E_NOTICE);
     ini_set("display_errors" , "Off");
