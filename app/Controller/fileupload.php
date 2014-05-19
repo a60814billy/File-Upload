@@ -11,11 +11,19 @@ class fileuploadController extends Controller{
 		}
 	}
 
-	public function index(){
+
+    /**
+     * 首頁
+     */
+    public function index(){
+        //$this->_model->createTable();
 	}
 
-	public function upload(){
-		if($this->_request->isPOST()){
+    /**
+     * 接收上傳POST，重新導到index
+     */
+    public function upload(){
+		if($this->_request->isPost()){
 			$no = $this->_request->getPost('no');
 			$file = $_FILES['paper'];
 			$t = explode(".", $file['name']);
@@ -31,11 +39,11 @@ class fileuploadController extends Controller{
 			$this->_model->uploadfile($no , $pass , $file['name'] , $no . "_專題報告" . date('Ymd-His')  . "." . $extname);
 		}
 		header("Location:" . WEB_ROOT . "?message=1");
-		return AUTO_SHOWVIEW_OFF;
+		return self::AUTO_SHOWVIEW_OFF;
 	}
 
-	public function login(){
-		if($this->_request->isPOST()){
+    public function login(){
+		if($this->_request->isPost()){
 			$password = $this->_request->getPost('password');
 			if($this->_model->checkpassword($password) == 1){
 				$_SESSION['login'] = "admin";
@@ -44,20 +52,9 @@ class fileuploadController extends Controller{
 		}
 		if($this->_isLogin){
 			header("Location:" . WEB_ROOT . "/fileupload/admin");
-			return AUTO_SHOWVIEW_OFF;
+			return self::AUTO_SHOWVIEW_OFF;
 		}
 	}
-
-	public function delete(){
-		$this->_opdata['viewmode'] = 0;
-		if($this->_request->isPOST()){
-			$pass = $_POST['password'];
-			$data = $this->_model->lookupByDeletePassword($pass);
-			$this->_opdata['viewmode'] = 1;
-			$this->_opdata['data'] = $data;
-		}
-	}
-
 
 	/**
 	 * Admin Function
@@ -65,13 +62,13 @@ class fileuploadController extends Controller{
 	public function logout(){
 		unset($_SESSION['login']);
 		header("Location:" . WEB_ROOT);
-		return AUTO_SHOWVIEW_OFF;
+		return self::AUTO_SHOWVIEW_OFF;
 	}
 
 	private function isLogin(){
 		if(!$this->_isLogin){
 			header("Location:" . WEB_ROOT . "/fileupload/login");
-			return AUTO_SHOWVIEW_OFF;	
+			return self::AUTO_SHOWVIEW_OFF;
 		}
 	}
 
@@ -82,14 +79,14 @@ class fileuploadController extends Controller{
 
 	public function runsql(){
 		$this->isLogin();
-		if($this->_request->isPOST()){
+		if($this->_request->isPost()){
 			$sql = $this->_request->getPost("sqlcmd");
 			if($this->_model->runSQL($sql)){
 				header("Location:" . WEB_ROOT . "/fileupload/runsql/?message=1");
 			}else{
 				header("Location:" . WEB_ROOT . "/fileupload/runsql/?message=2");
 			}
-			return AUTO_SHOWVIEW_OFF;	
+			return self::AUTO_SHOWVIEW_OFF;
 		}
 	}
 
@@ -99,4 +96,15 @@ class fileuploadController extends Controller{
 		$this->setCustomerView("admin");
 		$this->_opdata['message'] = "Create Table Succeed!";
 	}
+
+    public function changepassword(){
+        $this->isLogin();
+        if($this->_request->isPost()){
+            $pass = $_POST['password'];
+            $this->_model->changePassword($pass);
+            Log::write("New pass:" . $pass);
+            header("Location:" . WEB_ROOT . "/fileupload/admin");
+            return self::AUTO_SHOWVIEW_OFF;
+        }
+    }
 }

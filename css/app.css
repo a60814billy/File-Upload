@@ -1,0 +1,14 @@
+/* CSS Files */
+body{
+    width:80%;
+    margin:0 auto;
+    padding-top: 20px;
+}
+#title{
+    font-size:18pt;
+    font-weight:bold;
+}
+.loginForm{
+    max-width:350px;
+    margin:0 auto;
+}

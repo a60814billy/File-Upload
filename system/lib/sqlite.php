@@ -23,6 +23,10 @@
 			//$this->_conn->query("SET NAMES utf8");
 		}
 
+        public function __destruct(){
+            $this->_conn->close();
+        }
+
 		public function query($sql){
 			$this->sql = $sql;
             Log::write("  SQL:".$sql);
@@ -44,7 +48,7 @@
 		}
 
 		public function getData(){
-			return $this->query->fetch_array();
+			return $this->query->fetchArray();
 		}
 
 

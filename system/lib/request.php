@@ -9,6 +9,11 @@
         public function isPost(){
             return (bool)( 'POST' == $_SERVER['REQUEST_METHOD']);
         }
+
+        public function isDelete(){
+            return (bool)( 'DELETE' == $_SERVER['REQUEST_METHOD']);
+        }
+
         public function isAjax(){
             $flag = isset($_SERVER['HTTP_X_REQUESTED_WITH']) ? $_SERVER['HTTP_X_REQUESTED_WITH'] : FALSE;
             return (bool)('XMLHttpRequest' == $flag);

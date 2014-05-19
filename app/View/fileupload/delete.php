@@ -8,21 +8,7 @@
 
 		<link href="<?=WEB_ROOT?>/css/bootstrap.min.css" rel="stylesheet">
 		<link href="<?=WEB_ROOT?>/css/bootstrap-theme.min.css" rel="stylesheet">
-		<style type="text/css">
-		body{
-			width:80%;
-			margin:0 auto;
-			padding-top: 20px;
-		}
-		#title{
-			font-size:18pt;
-			font-weight:bold;
-		}
-		.loginForm{
-			max-width:350px;
-			margin:0 auto;
-		}
-		</style>
+		<link href="<?=WEB_ROOT?>/css/app.css" rel="stylesheet">
 	</head>
 	<body>
 		<header class="nav navbar">
@@ -39,74 +25,118 @@
 				</nav>
 			</div>
 		</header>
-		<article>
+		<article ng-app="deletefile">
 			<div class="container">
 				<ol class="breadcrumb">
 					<li>Home</li>
 					<li class="active"><a href="#">Delete</a></li>
 				</ol>
-				<?php if($data['viewmode'] == 0): ?>
-				<div class="panel panel-default panel-primary loginForm">
-					
-					<div class="panel-heading" id="title">Enter Delete Password</div>
-					<div class="panel-body">
-						<form class="form-inline" action="<?=WEB_ROOT?>/fileupload/delete" method="POST">
-							<input class="form-control" type="password" name="password" placeholder="Password" />
-							<input class="btn btn-default btn-primary" type="submit" value="login">
-						</form>
-					</div>
-				</div>
-				<?php endif; ?>
-				<?php if($data['viewmode'] == 1): ?>
-				<div class="panel panel-default panel-primary">
-					<div class="panel-heading" id="title">Select File</div>
-					<div class="panel-body">
-						<table id="selectItem" class="table table-bordered table-hover">
-							<tr>
-								<th><input type="checkbox" click="selall();" /></th>
-								<th>組別</th>
-								<th>檔名</th>
-								<th>上傳時間</th>
-							</tr>
-							<tbody>
-							<?php foreach($data['data'] as $r){ ?> 
-							<tr>
-								<td><input name="file[]" type="checkbox" value="<?php $r['id']?>" /></td>
-								<td><?php echo $r['groupNo']; ?></td>
-								<td><?php echo $r['originfilename']; ?></td>
-								<td><?php echo date("Y-m-d H:i:s" , $r['uploadtime']); ?></td>
-							</tr>
-							<?php } ?> 
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<?php endif; ?>
+                <div ng-view>
+
+                </div>
 			</div>
 		</article>
 		<footer class="footer nav navbar-fixed-bottom bg-info" style="padding:15px 0;">
-			<div class="container">
-				Developer:Raccoon last update:2014/05/18
-				</div>
+			<div class="container">Raccoon &copy 2014</div>
 		</footer>
 		<script src="<?=WEB_ROOT?>/js/jquery-2.1.1.js"></script>
 		<script src="<?=WEB_ROOT?>/js/bootstrap.min.js"></script>
 		<script src="<?=WEB_ROOT?>/js/bootstrap-fileinput.js"></script>
+        <script src="<?=WEB_ROOT?>/js/angular-1.3.0-beta.8/angular.js" ></script>
+        <script src="<?=WEB_ROOT?>/js/angular-1.3.0-beta.8/angular-resource.js" ></script>
+        <script src="<?=WEB_ROOT?>/js/angular-1.3.0-beta.8/angular-route.js" ></script>
 		<script>
-			$('input[type=file]').bootstrapFileInput();
-			$('#selectItem tbody tr').each(function(){
-				$(this).click(function(){
-					$obj = $(this).find("input[name='file[]']");
-					$checked = $obj.prop("checked");
-					$obj.prop("checked" , !$checked);
-					//alert($(this).index());
-				})
-			})
-			$("input[name='file[]']").each(function(){
-				$(this).click(function(e){
-					e.preventDefault();
-				});
-			});
+            /**
+             * Created by Raccoon on 2014/5/19.
+             */
+
+            /**
+             * Services
+             * Provide Files Resources
+             */
+            var services = angular.module('deletefile.services' , ['ngResource']);
+            services.factory('File' , ['$resource' , function($resource){
+                return $resource('<?=WEB_ROOT?>/api/file/:id' , {id: "@id"});
+            }]);
+            services.factory('MultiFileLoader' , ['File' , '$q' , function(File , $q){
+                return function(){
+                    var delay = $q.defer();
+                    File.query(function(files){
+                        delay.resolve(files);
+                    }, function(){
+                        delay.reject('Unable to detch file list');
+                    });
+                    return delay.promise;
+                };
+            }]);
+
+            /**
+             * App
+             * Route
+             */
+            var app = angular.module('deletefile' , ['ngRoute' , 'deletefile.services'])
+                .config(['$routeProvider' , function($routeProvider){
+                    $routeProvider.when('/',{
+                        controller:'AuthCtrl',
+                        templateUrl: '<?=WEB_ROOT?>/ngview/inputpassword.html'
+                    }).when('/list' , {
+                        controller: 'ListCtrl' ,
+                        resolve:{
+                            files:function(MultiFileLoader){
+                                return MultiFileLoader();
+                            }
+                        },
+                        templateUrl: '<?=WEB_ROOT?>/ngview/list.html'
+                    });
+                }]);
+
+            /**
+             * Authorization Controller
+             */
+            app.controller('AuthCtrl' , ['$scope' , '$location' , '$http' , function($scope , $location , $http){
+                $scope.password = "";
+                $scope.auth = function(){
+                    $http.post("<?=WEB_ROOT?>/api/auth/" , {
+                        password:$scope.password
+                    })
+                        .success(function(data,status,header,config){
+                            if(data.auth){
+                                $location.path("/list");
+                            }
+                        })
+                        .error(function(data,status,header,config){
+                            if(status == 404){
+                                $scope.error = true;
+                            }
+                        });
+                };
+                $scope.list = function(){
+                    $location.path("/list");
+                };
+            }]);
+
+            /**
+             * List Files Controller
+             */
+            app.controller('ListCtrl' , ['$scope' , '$location' ,  'files' , function($scope , $location , files){
+                $scope.files = files;
+                if($scope.files.length == 0){
+                    $location.path('/');
+                }
+                $scope.remove = function(index){
+                    $check = confirm("確定要刪除 上傳序號:" + $scope.files[index].id + "\n檔名： " + $scope.files[index].originfilename);
+                    if($check){
+                        file = $scope.files[index];
+                        $scope.files.splice(index , 1);
+                        file.$delete(function(){
+                            if($scope.files.length==0){
+                                $location.path('/');
+                            }
+                        });
+                    }
+                    $scope.apply();
+                }
+            }]);
 		</script>
 	</body>
 </html>

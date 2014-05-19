@@ -6,22 +6,9 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>File Upload</title>
 
-		<link href="<?=WEB_ROOT?>/css/bootstrap.min.css" rel="stylesheet">
-		<link href="<?=WEB_ROOT?>/css/bootstrap-theme.min.css" rel="stylesheet">
-		<style type="text/css">
-		body{
-			width:80%;
-			margin:0 auto;
-			padding-top: 20px;
-		}
-		#title{
-			font-size:18pt;
-			font-weight:bold;
-		}
-		.upload{
-			margin:0 auto;
-		}
-		</style>
+        <link href="<?=WEB_ROOT?>/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?=WEB_ROOT?>/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="<?=WEB_ROOT?>/css/app.css" rel="stylesheet">
 	</head>
 	<body>
 		<header class="nav navbar">
@@ -32,7 +19,7 @@
 				<nav class="navbar-default" role="navigation">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="active"><a href="<?=WEB_ROOT?>/">上傳</a></li>
-						<!--<li><a href="<?=WEB_ROOT?>/fileupload/delete">刪除</a></li>-->
+						<li><a href="<?=WEB_ROOT?>/fileupload/delete">刪除</a></li>
 						<li><a href="<?=WEB_ROOT?>/fileupload/admin">Admin</a></li>
 					</ul>
 				</nav>
@@ -85,9 +72,7 @@
 
 		</article>
 		<footer class="footer nav navbar-fixed-bottom bg-info" style="padding:15px 0;">
-			<div class="container">
-				Raccoon &copy 2014
-				</div>
+			<div class="container">Raccoon &copy 2014</div>
 		</footer>
 		<script src="<?=WEB_ROOT?>/js/jquery-2.1.1.js"></script>
 		<script src="<?=WEB_ROOT?>/js/bootstrap.min.js"></script>

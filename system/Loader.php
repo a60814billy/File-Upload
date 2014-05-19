@@ -84,6 +84,7 @@
                 self::$_controller = new $controller();
                 self::$_controller->setConfig(self::$_config);
                 self::$_controller->setRequest(self::$_request);
+                self::$_controller->setParameter(self::$_route->parameter);
                 self::$_controller->setView(self::$_route->controller , self::$_route->action);                
                 if( file_exists( ROOT . '/app/Model/' . self::$_route->controller . '.php')){
                     require ROOT . '/app/Model/' . self::$_route->controller . '.php';

@@ -1,0 +1,28 @@
+<div class="panel panel-default panel-primary">
+    <div class="panel-heading" id="title">檔案清單</div>
+
+    <div class="panel-body">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th></th>
+                <th>編號</th>
+                <th>檔名</th>
+                <th>上傳序號</th>
+                <th>上傳時間</th>
+            </tr>
+            <tbody>
+            <tr ng-repeat="file in files">
+                <td>
+                    <button ng-click="remove($index)">
+                        刪除檔案
+                    </button>
+                </td>
+                <td>{{ file.groupNo }}</td>
+                <td>{{ file.originfilename }}</td>
+                <td>{{ file.id }}</td>
+                <td>{{ file.uploadtime * 1000 | date:'yyyy/MM/dd H:m:s' }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

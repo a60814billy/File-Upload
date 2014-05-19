@@ -20,6 +20,7 @@ EOD;
 UPLOAD;
 		$this->_db->exec($config);
 		$this->_db->exec($upload);
+        $this->_db->exec("INSERT INTO config(name,value) VALUES('password' , '". sha1("123456") ."')");
 	}
 
 	public function runSQL($sql){
@@ -50,8 +51,14 @@ UPLOAD;
 		return $data;
 	}
 
+    public function changePassword($password){
+        $sql = "update config set value='" . sha1($password) . "' WHERE name='password'";
+        Log::write("--query: " . $sql);
+        $this->_db->exec($sql);
+    }
+
 	public function checkpassword($password){
-		$sql = "SELECT * FROM config WHERE name='password' and value='" . $password . "';";
+		$sql = "SELECT * FROM config WHERE name='password' and value='" . sha1($password) . "';";
 		Log::write("--query: ".$sql);
 		$this->_db->query($sql);
 		if($this->_db->getNum() == 1){

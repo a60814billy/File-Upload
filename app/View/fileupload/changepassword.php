@@ -20,7 +20,15 @@
 					<ul class="nav navbar-nav navbar-right">
                         <li><a href="<?=WEB_ROOT?>/">上傳</a></li>
                         <li><a href="<?=WEB_ROOT?>/fileupload/delete">刪除</a></li>
-                        <li class="active"><a href="<?=WEB_ROOT?>/fileupload/admin">Admin</a></li>
+                        <li class="active dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?=WEB_ROOT?>/fileupload/runsql">Run SQL Statments</a></li>
+                                <li><a href="<?=WEB_ROOT?>/fileupload/createtable" >Create Table</a></li>
+                                <li><a href="<?=WEB_ROOT?>/fileupload/changepassword">Change Password</a></li>
+                                <li><a href="<?=WEB_ROOT?>/fileupload/logout">Logout</a></li>
+                            </ul>
+                        </li>
 					</ul>
 				</nav>
 			</div>
@@ -28,15 +36,15 @@
 		<article>
 			<div class="container">
 				<ol class="breadcrumb">
-					<li>Home</li>
-					<li class="active"><a href="#">Login</a></li>
+					<li>Admin</li>
+					<li class="active"><a href="#">Password Change</a></li>
 				</ol>
 				<div class="panel panel-default panel-primary loginForm">
-					<div class="panel-heading" id="title">Admin Login</div>
+					<div class="panel-heading" id="title">Password Change</div>
 					<div class="panel-body">
-						<form class="form-inline" action="<?=WEB_ROOT?>/fileupload/login" method="POST">
-							<input class="form-control" type="password" name="password" placeholder="Password" />
-							<input class="btn btn-default btn-primary" type="submit" value="login">
+						<form class="form-group" action="" method="POST">
+							<input class="form-control form-group" type="password" name="password" placeholder="新密碼" />
+							<input class="btn btn-default btn-primary" type="submit" value="更改">
 						</form>
 					</div>
 				</div>

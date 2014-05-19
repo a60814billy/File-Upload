@@ -7,13 +7,14 @@
         public $controller;
         public $action;
         
-        public $para;
+        public $parameter = array();
 
         public $url;
 
         public function __construct($config){
             $this->config = $config;
             $this->url = substr($_SERVER['REQUEST_URI'] , strlen(WEB_ROOT));
+            Log::write("-REQUEST_URI: " . $_SERVER['REQUEST_URI']);
             
             if($config['post_str'] == substr($this->url , strlen($this->url)-strlen($config['post_str']) , strlen($config['post_str']))){
                 $this->url = substr($this->url , 0 , strlen($this->url) - strlen($config['post_str']));
@@ -36,12 +37,16 @@
 
         public function parse_url(){
             $tmp = explode("/" , $this->url);
-
             if(count($tmp)>=2){
                 $this->action = $tmp[1];
             }
             $this->controller= $tmp[0];
 
+            if(count($tmp)>2){
+                for($i=2;$i<count($tmp);$i++){
+                    $this->parameter[] = $tmp[$i];
+                }
+            }
             /*$tmp = explode('&' , $this->url);
             foreach($tmp as $key => $value){
                 $tmp2 = explode('=' , $value);

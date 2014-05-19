@@ -1,14 +1,15 @@
 <?php
 
 abstract class Controller{
-    const AUTO_SHOWVIEW_OFF = 1;
+    const   AUTO_SHOWVIEW_OFF = 1;
     public  $_config;
     public  $_request;
     public  $_model;
     public  $_view;
     public  $_defaultViewName;
     public  $_viewname = "";
-    private $_controllerName;
+    protected  $_controllerName;
+    protected $_parameter = array();
 
     public  $_opdata = array();
 
@@ -16,6 +17,9 @@ abstract class Controller{
 
     public function index(){}
 
+    public final function setParameter($para){
+        $this->_parameter = $para;
+    }
     public final function setConfig($config){
         $this->_config = $config;
     }
@@ -34,9 +38,11 @@ abstract class Controller{
         $this->_viewname = $this->_controllerName . "/" . $action;
     }
     public final function _action($actionName){
-        if(!$this->$actionName() == AUTO_SHOWVIEW_OFF){
+        if(!$this->$actionName() == self::AUTO_SHOWVIEW_OFF){
             Log::write("--inner View Name:" . $this->_viewname);
             $this->showView();
+        }else{
+            Log::write('--no view');
         }
     }
     public final function showView($viewname = NULL , $controllerName = NULL){

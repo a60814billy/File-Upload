@@ -8,36 +8,26 @@
 
 		<link href="<?=WEB_ROOT?>/css/bootstrap.min.css" rel="stylesheet">
 		<link href="<?=WEB_ROOT?>/css/bootstrap-theme.min.css" rel="stylesheet">
-		<style type="text/css">
-		body{
-			width:80%;
-			margin:0 auto;
-			padding-top: 20px;
-		}
-		#title{
-			font-size:18pt;
-			font-weight:bold;
-		}
-		.loginForm{
-			max-width:350px;
-			margin:0 auto;
-		}
-		</style>
+        <link href="<?=WEB_ROOT?>/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?=WEB_ROOT?>/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="<?=WEB_ROOT?>/css/app.css" rel="stylesheet">
 	</head>
 	<body>
 		<header class="nav navbar">
-			<div class="container navbar-default">
+			<div class="container">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="<?=WEB_ROOT?>/">File Upload</a>
 				</div>
-				<nav class="" role="navigation">
+				<nav class="navbar-default" role="navigation">
 					<ul class="nav navbar-nav navbar-right ">
 						<li ><a href="<?=WEB_ROOT?>/">上傳</a></li>
+                        <li><a href="<?=WEB_ROOT?>/fileupload/delete">刪除</a></li>
 						<li class="active dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?=WEB_ROOT?>/fileupload/runsql">Run SQL Statments</a></li>
 								<li><a href="<?=WEB_ROOT?>/fileupload/createtable" >Create Table</a></li>
+                                <li><a href="<?=WEB_ROOT?>/fileupload/changepassword">Change Password</a></li>
 								<li><a href="<?=WEB_ROOT?>/fileupload/logout">Logout</a></li>
 							</ul>
 						</li>
@@ -82,9 +72,7 @@
 			</div>
 		</article>
 		<footer class="footer nav navbar-fixed-bottom bg-info" style="padding:15px 0;">
-			<div class="container">
-				Developer:Raccoon last update:2014/05/18
-				</div>
+			<div class="container">Raccoon &copy 2014</div>
 		</footer>
 		<script src="<?=WEB_ROOT?>/js/jquery-2.1.1.js"></script>
 		<script src="<?=WEB_ROOT?>/js/bootstrap.min.js"></script>
