@@ -81,7 +81,7 @@
 			$('input[type=file]').bootstrapFileInput();
 			function download($file){
 				var $ifram = $("<iframe style='display:none;' />");
-				$ifram.attr("src" , "<?=WEB_ROOT?>/upload/" + $file);
+				$ifram.attr("src" , "<?=WEB_ROOT?>/getfile/download/" + $file);
 				$ifram.appendTo('body');
 				$ifram.load(function(){
 				});

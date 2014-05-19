@@ -56,6 +56,10 @@ class fileuploadController extends Controller{
 		}
 	}
 
+    public function delete(){
+        
+    }
+
 	/**
 	 * Admin Function
 	 */
